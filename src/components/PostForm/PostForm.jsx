@@ -15,7 +15,7 @@ function PostForm() {
     return (
         <div className='bg-gray-100' >
             <div className='lg:py-16 md:py-12 py-10 container' >
-                <form className='bg-white w-3/4 mx-auto p-8' onSubmit={handleSubmit(post)} >
+                <form className='bg-white lg:w-3/4 md:w-[90%] w-[95%] rounded-2xl mx-auto md:p-8 p-4' onSubmit={handleSubmit(post)} >
                     <h3 className='md:text-2xl text-xl font-medium text-dark-green text-center mb-10'>Create New Post</h3>
                     <div>
                         <Input

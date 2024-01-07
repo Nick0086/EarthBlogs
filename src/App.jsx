@@ -9,7 +9,8 @@ function App() {
     <>
       <Header />
       <Slider />
-      <PostForm/>
+      <SignUpForm/>
+      {/* <PostForm/> */}
       <NewsLatter/>
     </>
   )
