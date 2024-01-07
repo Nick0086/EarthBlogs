@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import './App.css'
 
-import {Header, Slider} from "./components/index"
+import { Header, LoginForm, NewsLatter, SignUpForm, Slider } from "./components/index"
 
 function App() {
 
   return (
     <>
-      <Header/>
-      <Slider/>
+      <Header />
+      <Slider />
+      <NewsLatter/>
     </>
   )
 }
