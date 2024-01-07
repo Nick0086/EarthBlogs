@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
-import { Header, LoginForm, NewsLatter, SignUpForm, Slider } from "./components/index"
+import { Header, LoginForm, NewsLatter, PostForm, SignUpForm, Slider } from "./components/index"
 
 function App() {
 
@@ -9,6 +9,7 @@ function App() {
     <>
       <Header />
       <Slider />
+      <PostForm/>
       <NewsLatter/>
     </>
   )
