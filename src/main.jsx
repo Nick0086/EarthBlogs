@@ -6,6 +6,7 @@ import store from "./store/store"
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import {HomePage, AddPostPage, LoginPage, SignUpPage } from './pages/index'
+import { PrivateRoutes } from './components/index.js'
 
 const router = createBrowserRouter([
   {
@@ -18,15 +19,27 @@ const router = createBrowserRouter([
       },
       {
         path:'/signup',
-        element:<SignUpPage/>
+        element:(
+          <PrivateRoutes isLoggedIn={false}>
+            <SignUpPage/>
+          </PrivateRoutes>
+        )
       },
       {
         path:'/login',
-        element:<LoginPage/>
+        element:(
+          <PrivateRoutes isLoggedIn={false}>
+            <LoginPage/>
+          </PrivateRoutes>
+        )
       },
       {
         path:'/createblog',
-        element:<AddPostPage/>
+        element:(
+          <PrivateRoutes isLoggedIn={true}>
+            <AddPostPage/>
+          </PrivateRoutes>
+        )
       }
     ]
   }

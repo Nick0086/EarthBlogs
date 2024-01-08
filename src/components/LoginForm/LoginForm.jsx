@@ -16,8 +16,8 @@ function LoginForm() {
 
     return (
         <div className='bg-gray-100' >
-            <div className='lg:py-16 md:py-12 py-10 container' >
-                <div className='lg:w-2/4 md:w-2/3 bg-white mx-auto rounded-xl' >
+            <div className='md:py-0 py-20 container min-h-screen  flex justify-center items-center' >
+                <div className='lg:w-2/4 md:w-2/3 w-full bg-white mx-auto rounded-xl' >
                     <form className='w-full md:p-8 p-6 mx-auto' onSubmit={handleSubmit(create)}>
                         <h3 className='md:text-2xl text-xl font-medium text-dark-green text-center mb-10'>Sign In to Our World</h3>
                         <div className='md:w-3/4 mx-auto' >

@@ -1,5 +1,6 @@
 import React from 'react'
 import Logo from "../../assets/Logo.png"
+import { Link } from 'react-router-dom'
 
 function Header() {
     return (
@@ -13,9 +14,10 @@ function Header() {
                     </div>
                     <nav>
                         <ul className='flex justify-between items-center' >
-                            <li>Home</li>
-                            <li>Sign Up</li>
-                            <li>Login</li>
+                            <Link to="/" >home</Link>
+                            <Link to="/signup" >Sign Up</Link>
+                            <Link to="/login" >Login</Link>
+                            <Link to="/createblog">Add Post</Link>
                         </ul>
                     </nav>
                 </div>
