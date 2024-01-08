@@ -5,5 +5,6 @@ import SignUpForm from "./SignUpForm/SignUpForm";
 import LoginForm from "./LoginForm/LoginForm";
 import RTE from "./RTE/RTE"
 import PostForm from "./PostForm/PostForm";
+import Footer from "./Footer/Footer";
 
-export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm};
+export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer};
