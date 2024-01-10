@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../input';
 import Button from '../Button';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 function SignUpForm() {
 
@@ -9,18 +10,23 @@ function SignUpForm() {
 
     const create = (data) => {
         try {
-            console.log(data)
+            console.log("sign in data",data)
         } catch (error) {
             console.log(errors)
             console.log(error)
         }
-        
     }
+
+    useEffect(() => {
+        // Add 'show' class to trigger the fade-in animation when component mounts
+        const sliderElement = document.querySelector('.signup');
+        sliderElement.classList.add('show');
+    }, []);
 
     return (
         <div className='bg-gray-100' >
-            <div className='md:py-0 py-20 container min-h-screen  flex justify-center items-center' >
-                <div className='lg:w-2/4 md:w-2/3 bg-white mx-auto rounded-xl' >
+            <div className='md:py-32 py-20 container min-h-screen  flex justify-center items-center' >
+                <div className='lg:w-2/4 md:w-2/3  bg-white mx-auto rounded-xl signup' >
                     <form className='w-full md:p-8 p-6 mx-auto' onSubmit={handleSubmit(create)}>
                         <h3 className='md:text-2xl text-xl font-medium text-dark-green text-center mb-10'>Registration to Our World</h3>
                         <div className='md:w-3/4 mx-auto' >
@@ -59,6 +65,7 @@ function SignUpForm() {
                             />
                             { errors.password && <p className="text-red-500 text-sm mb-2">{errors.password.message || ""}</p>}
                         </div>
+                        <div className='text-center my-2' >Already Have an account?<Link to="/login" className='text-blue-600 ms-2'>Login here</Link></div>
                         <div className='text-center mt-6'>
                             <Button type='submit'>create account</Button>
                         </div>

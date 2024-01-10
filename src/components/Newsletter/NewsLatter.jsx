@@ -5,6 +5,8 @@ import Button from '../Button'
 function NewsLatter() {
 
 
+
+
   return (
     <section className='NewsLatter flex justify-center items-center' >
       <div className='bg-white rounded-lg ease-in-out lg:w-2/4 md:w-3/4 w-[90%]  md:p-10 p-5 text-center' >

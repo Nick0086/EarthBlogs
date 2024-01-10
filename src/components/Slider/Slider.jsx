@@ -9,11 +9,6 @@ function Slider() {
         // Add 'show' class to trigger the fade-in animation when component mounts
         const sliderElement = document.querySelector('.slider');
         sliderElement.classList.add('show');
-
-        // Optionally, you can remove the 'show' class after a certain delay
-        // setTimeout(() => {
-        //   sliderElement.classList.remove('show');
-        // }, 3000); // Adjust the delay as needed
     }, []);
 
 
