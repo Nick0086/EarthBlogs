@@ -2,17 +2,18 @@ import React from 'react'
 import {Editor } from '@tinymce/tinymce-react';
 import {Controller } from 'react-hook-form';
 
-export default function RTE({name, control, label, defaultValue ="",labelclass}) {
+function RTE({name, control, label, defaultValue ="",labelclass},ref) {
   return (
     <div className='w-full mb-6'> 
     {label && <label className={`block text-sm font-medium text-dark-green mb-4 ${labelclass}`}>{label}</label>}
 
     <Controller
-    name={name || "content"}
+    name={name || "Content"}
     control={control}
     render={({field: {onChange}}) => (
         <Editor
         initialValue={defaultValue}
+        ref={ref}
         init={{
             initialValue: defaultValue,
             height: 500,
@@ -51,3 +52,5 @@ export default function RTE({name, control, label, defaultValue ="",labelclass})
      </div>
   )
 }
+
+export default React.forwardRef(RTE)
