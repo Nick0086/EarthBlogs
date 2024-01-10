@@ -32,7 +32,7 @@ function App() {
       loding ? 
       <Spinner/> :
       <>
-        <Header/>
+        <Header changeHandler={(res) => setLoading(res)} />
         <Outlet/>
         <Footer/>
       </>

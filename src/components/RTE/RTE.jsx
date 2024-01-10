@@ -2,10 +2,10 @@ import React from 'react'
 import {Editor } from '@tinymce/tinymce-react';
 import {Controller } from 'react-hook-form';
 
-export default function RTE({name, control, label, defaultValue =""}) {
+export default function RTE({name, control, label, defaultValue ="",labelclass}) {
   return (
     <div className='w-full mb-6'> 
-    {label && <label className='block text-sm font-medium text-gray-700 mb-4'>{label}</label>}
+    {label && <label className={`block text-sm font-medium text-dark-green mb-4 ${labelclass}`}>{label}</label>}
 
     <Controller
     name={name || "content"}
