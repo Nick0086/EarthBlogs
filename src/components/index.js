@@ -8,5 +8,6 @@ import PostForm from "./PostForm/PostForm";
 import Footer from "./Footer/Footer";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 import Spinner from "./Spinner/Spinner";
+import AdminPostShow from "./AdminPostShow/AdminPostShow";
 
-export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner};
+export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner,AdminPostShow};

@@ -17,7 +17,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    
+  },[])
 
+  useEffect(() => {
     setLoading(true);
     authService.getuser()
     .then((response) => {

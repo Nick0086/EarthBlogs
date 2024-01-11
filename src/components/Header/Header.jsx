@@ -33,6 +33,11 @@ function Header({changeHandler}) {
             name: "Add Post",
             to: "/createblog",
             authStatus: authStatus,
+        },
+        {
+            name: "dashboard",
+            to: "/dashboard",
+            authStatus: authStatus,
         }
     ]
 
@@ -86,7 +91,7 @@ function Header({changeHandler}) {
                                 )
                             }
                             {
-                                    authStatus && <Button onClick={logOutHandler} classname='ms-4 font-normal md:w-[100px] md:py-2 rounded-xl capitalize'>Logout</Button>
+                                    authStatus && <Button onClick={logOutHandler} classname='ms-4 font-normal md:w-[75px] md:py-2 rounded-xl capitalize'>Logout</Button>
                             }
                         </ul>
                     </nav>

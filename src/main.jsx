@@ -5,8 +5,8 @@ import './index.css'
 import store from "./store/store"
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import {HomePage, AddPostPage, LoginPage, SignUpPage } from './pages/index'
-import { PrivateRoutes } from './components/index.js'
+import {HomePage, AddPostPage, LoginPage, SignUpPage, DashboardPage } from './pages/index'
+import {  PrivateRoutes } from './components/index.js'
 
 const router = createBrowserRouter([
   {
@@ -40,7 +40,15 @@ const router = createBrowserRouter([
             <AddPostPage/>
           </PrivateRoutes>
         )
-      }
+      },
+      {
+        path:'/dashboard',
+        element:(
+          <PrivateRoutes isLoggedIn={true}>
+            <DashboardPage/>
+          </PrivateRoutes>
+        )
+      },
     ]
   }
 ])
