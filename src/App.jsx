@@ -5,11 +5,13 @@ import { Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import authService from './Appwrite/Auth';
+import postService from './Appwrite/PostData';
 import { login, logout } from './store/authSlice';
+import { postData } from './store/postSlice';
 
 import 'react-toastify/dist/ReactToastify.css';
-  // minified version is also included
 import 'react-toastify/dist/ReactToastify.min.css';
+
 
 function App() {
 
@@ -17,7 +19,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    
+    postService.getAllPost()
+    .then((res) => console.log(res))
+    // .then((res)=>dispatch(postData(res)))
   },[])
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Storage } from "appwrite";
+import { Client, Databases, ID, Storage ,Query} from "appwrite";
 import conf from "../conf/conf";
 
 export class PostService {
@@ -79,6 +79,33 @@ export class PostService {
             console.error("Appwrite serive :: delatePost :: error", error);
         }
     }
+    async getAllPost(queries = [Query.equal("status", "Active")]){
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaaseId,
+                conf.appwriteCollectionId,
+                queries
+            )
+        } catch (error) {
+            console.error("Appwrite serive :: getAllPost :: error", error);   
+        }
+    }
+
+    async getUserPost(userId){
+        console.log("userId",userId)
+        try{
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaaseId,
+                conf.appwriteCollectionId,
+                [
+                    Query.equal("userId",userId)
+                ]
+            )
+        } catch(error){
+            console.error("Appwrite serive :: getUserPost :: error", error);   
+        }
+    }
+
 
     // ================== File Service =============
 
