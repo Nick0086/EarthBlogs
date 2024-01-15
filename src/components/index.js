@@ -9,5 +9,6 @@ import Footer from "./Footer/Footer";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 import Spinner from "./Spinner/Spinner";
 import AdminPostShow from "./AdminPostShow/AdminPostShow";
+import DeshBordHeader from "./DeshBoardHeader/DeshBordHeader";
 
-export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner,AdminPostShow};
+export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner,AdminPostShow,DeshBordHeader};

@@ -37,9 +37,9 @@ export class PostService {
             return false;
         }
     }
-    async updatePost({Title, Featureimage, Category, status, Content,PostId}){
+    async updatePost(PostId,{Title, Featureimage, Category, status, Content}){
         try {
-
+            console.log("PostId",PostId)
             return await this.databases.updateDocument(
                 conf.appwriteDatabaaseId,
                 conf.appwriteCollectionId,
@@ -50,7 +50,7 @@ export class PostService {
                     Category,
                     status,
                     Content,
-                }
+                }   
             )
             
         } catch (error) {
@@ -122,7 +122,7 @@ export class PostService {
         }
     }
 
-    async delatePost(fileId){
+    async delateFile(fileId){
         try {
             return await this.storage.deleteFile(
                 conf.appwriteBucketId,
@@ -135,10 +135,11 @@ export class PostService {
 
     async getFilePreview(fileId){
         try {
-            return await this.storage.getFilePreview(
+            const res = await this.storage.getFilePreview(
                 conf.appwriteBucketId,
                 fileId
             )
+            return res;
         } catch (error) {
             console.error("Appwrite serive :: getFilePreview :: error", error); 
         }

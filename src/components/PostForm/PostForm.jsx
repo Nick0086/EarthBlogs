@@ -11,27 +11,59 @@ import postService from '../../Appwrite/PostData';
 import { useNavigate } from 'react-router-dom';
 import Spinner from "../Spinner/Spinner"
 
-function PostForm() {
-    const { register, handleSubmit, control, formState: { errors } } = useForm();
+function PostForm({ editPost }) {
+    const { register, handleSubmit, control, formState: { errors }, setValue, getValues } = useForm({
+        defaultValues: {
+            Title: editPost?.Title || '',
+            Content: editPost?.Content || '',
+            status: editPost?.status || 'Active',
+            Category: editPost?.Category || "Personal",
+        }
+    });
     const userData = useSelector((state) => state.auth.userData)
     const navigate = useNavigate();
     const [loading, SetLoading] = useState(true);
+    
 
     const postHandler = async (data) => {
 
         SetLoading(false);
-        const imageFile = await postService.uploadFile(data.image[0]);
-        const fileId = imageFile.$id;
 
-        data.Featureimage = fileId;
-        data.PostId = fileId.concat(imageFile.signature).slice(0, 30);
-        data.userId = userData.$id;
+        if (editPost) {
 
-        const addPost = await postService.createPost(data);
+            console.log("editPost",editPost)
+            console.log("data",data)
+            console.log(typeof editPost.$id)
 
-        if (addPost) {
-            navigate('/');
+            const imageFile = data.image[0] ? await postService.uploadFile(data.image[0]) : null;
+
+            if (imageFile) {
+                await postService.delateFile(editPost.Featureimage);
+            }
+
+            data.Featureimage = imageFile?.$id || editPost.Featureimage;
+
+            const editposts = await postService.updatePost(editPost.$id,data);
+
+            if (editposts) {
+                navigate('/');
+            }
+
+        } else {
+            const imageFile = await postService.uploadFile(data.image[0]);
+            const fileId = imageFile.$id;
+
+            data.Featureimage = fileId;
+            data.PostId = fileId.concat(imageFile.signature).slice(0, 30);
+            data.userId = userData.$id;
+
+            const addPost = await postService.createPost(data);
+
+            if (addPost) {
+                navigate('/');
+            }
         }
+
         SetLoading(true);
     };
 
@@ -51,9 +83,15 @@ function PostForm() {
         }
     }
     useEffect(() => {
+        // prevent unauthorize user for edit post
+        if(editPost){
+            if(userData.$id !== editPost.userId){
+                navigate('/')
+            }  
+        }
         // Notify only after the render, using useEffect
         notify();
-    }, [errors]);
+    }, [errors, setValue, getValues]);
 
     return (
         <>
@@ -83,6 +121,7 @@ function PostForm() {
                                     labelclass="text-[16px]"
                                     name="Content"
                                     control={control}
+                                    defaultValue={editPost?.Content || ''}
                                     {...register("Content",
                                         {
                                             required: "Content is required",
@@ -90,7 +129,8 @@ function PostForm() {
                                                 value: 3000,
                                                 message: 'Title cannot exceed 3000 characters',
                                             }
-                                        })}
+                                        }
+                                        )}
                                 />
                                 <Input
                                     label="Featured Image"
@@ -98,9 +138,11 @@ function PostForm() {
                                     placeholder="Featured Image"
                                     type="file"
                                     classname="border-b-0"
+
                                     accept="image/png, image/jpg, image/jpeg, image/gif"
-                                    {...register("image", { required: "Post Thumbnail is required", 
-                                })}
+                                    {...register("image", {
+                                        // required: "Post Thumbnail is required",
+                                    })}
                                 />
                                 <Selector
                                     labelclass="text-[16px]"
@@ -123,7 +165,7 @@ function PostForm() {
                         </form>
                     </div>
                 </div> :
-                <Spinner/>
+                    <Spinner />
             }
         </>
 
