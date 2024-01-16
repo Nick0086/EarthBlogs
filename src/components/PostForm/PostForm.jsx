@@ -91,7 +91,7 @@ function PostForm({ editPost }) {
         }
         // Notify only after the render, using useEffect
         notify();
-    }, [errors, setValue, getValues]);
+    }, [errors, setValue, getValues,notify]);
 
     return (
         <>

@@ -4,5 +4,7 @@ import LoginPage from "./LoginPage";
 import AddPostPage from "./AddPostPage";
 import DashboardPage from "./DashboardPage";
 import EditPostpage from "./EditPostpage";
+import FullPostCardPage from "./FullPostCardPage";
 
-export {AddPostPage,HomePage,SignUpPage,LoginPage,DashboardPage,EditPostpage};
+
+export {AddPostPage,HomePage,SignUpPage,LoginPage,DashboardPage,EditPostpage,FullPostCardPage};

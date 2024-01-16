@@ -20,8 +20,7 @@ function App() {
 
   useEffect(() => {
     postService.getAllPost()
-    .then((res) => console.log(res))
-    // .then((res)=>dispatch(postData(res)))
+    .then((res)=>dispatch(postData(res)))
   },[])
 
   useEffect(() => {

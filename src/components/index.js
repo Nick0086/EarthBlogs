@@ -10,5 +10,8 @@ import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 import Spinner from "./Spinner/Spinner";
 import AdminPostShow from "./AdminPostShow/AdminPostShow";
 import DeshBordHeader from "./DeshBoardHeader/DeshBordHeader";
+import PostCard from "./PostCard/PostCard";
+import HomePostSection from "./HomePostSection/HomePostSection";
+import DetailPostCard from "./DetailPostCard/DetailPostCard";
 
-export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner,AdminPostShow,DeshBordHeader};
+export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner,AdminPostShow,DeshBordHeader,PostCard,HomePostSection,DetailPostCard};

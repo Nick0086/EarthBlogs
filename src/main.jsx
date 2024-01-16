@@ -5,7 +5,7 @@ import './index.css'
 import store from "./store/store"
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import {HomePage, AddPostPage, LoginPage, SignUpPage, DashboardPage, EditPostpage } from './pages/index'
+import {HomePage, AddPostPage, LoginPage, SignUpPage, DashboardPage, EditPostpage, FullPostCardPage } from './pages/index'
 import {  PrivateRoutes } from './components/index.js'
 
 const router = createBrowserRouter([
@@ -46,6 +46,14 @@ const router = createBrowserRouter([
         element:(
           <PrivateRoutes isLoggedIn={true}>
             <EditPostpage/>
+          </PrivateRoutes>
+        )
+      },
+      {
+        path:'/post/:postid',
+        element:(
+          <PrivateRoutes isLoggedIn={true}>
+            <FullPostCardPage/>
           </PrivateRoutes>
         )
       },

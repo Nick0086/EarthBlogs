@@ -10,6 +10,7 @@ const postSlice = createSlice({
     reducers:{
         postData : (state,action) =>  {
             state.postData = action.payload;
+            console.log("action.payload",action.payload)
         }, 
     }
 })

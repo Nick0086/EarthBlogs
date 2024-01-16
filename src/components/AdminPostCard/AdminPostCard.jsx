@@ -47,7 +47,7 @@ function AdminPostCard({ data,getpost }) {
                     {/* <p>{Parser((data.Content).slice(0, 500))}</p> */}
                     <p>{data.$createdAt.split('T')[0].split('-')[2]} - {data.$createdAt.split('T')[0].split('-')[1]} - {data.$createdAt.split('T')[0].split('-')[0]}</p>
                 </div>
-                <div className='col-span-2 flex flex-col items-center justify-between' >
+                <div className='col-span-2 flex flex-col items-center justify-between gap-2' >
                     <Button classname='md:w-[70px] md:p-2 bg-blue-600 hover:bg-blue-900 rounded-lg text-sm' onClick={() => navigate(`/editpost/${data.$id}`)} >Edit</Button>
                     <Button classname='md:w-[70px] md:p-2 bg-red-500 hover:bg-red-900 rounded-lg text-sm' onClick={deleteHandler} >Delete</Button>
                 </div>
