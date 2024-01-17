@@ -16,6 +16,7 @@ function PostCard({ post }) {
         <div>
             <img src={img} className='aspect-video rounded-xl' alt="" />
             <h3><Link to={`/post/${post.$id}`} >{(post.Title).substring(0, 40) + "..."}</Link></h3>
+            <p>{post.View ? post.View : 0  }</p>
         </div>
     )
 }

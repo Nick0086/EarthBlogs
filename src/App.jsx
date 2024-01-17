@@ -5,9 +5,7 @@ import { Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import authService from './Appwrite/Auth';
-import postService from './Appwrite/PostData';
 import { login, logout } from './store/authSlice';
-import { postData } from './store/postSlice';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -18,10 +16,6 @@ function App() {
   const [loding , setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    postService.getAllPost()
-    .then((res)=>dispatch(postData(res)))
-  },[])
 
   useEffect(() => {
     setLoading(true);

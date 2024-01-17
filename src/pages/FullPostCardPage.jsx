@@ -12,15 +12,15 @@ function FullPostCardPage() {
 
     useEffect(() => {
         setLoading(true)
+
         if (postid) {
             postService.getPost(postid)
                 .then((res) => setPost(res))
                 .catch((error) => console.error("error in fetch post for view", error))
                 .finally(() => setLoading(false))
         }
+
     }, [postid])
-
-
 
 
     return (

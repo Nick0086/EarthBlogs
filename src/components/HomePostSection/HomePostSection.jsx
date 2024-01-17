@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import PostCard from '../PostCard/PostCard'
 import { Container } from 'postcss'
+import postService from '../../Appwrite/PostData';
 
 function HomePostSection() {
 
-    const postData = useSelector((state) => state.post.postData)
+    const[postData,setPostData] = useState();
+    useEffect(() => {
+        postService.getAllPost()
+        .then((res)=>setPostData(res))
+        .then((res) => console.log(res))
+      },[])
+    // const postData = useSelector((state) => state.post.postData)
     console.log("postData", postData)
 
 

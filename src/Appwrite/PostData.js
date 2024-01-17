@@ -37,9 +37,8 @@ export class PostService {
             return false;
         }
     }
-    async updatePost(PostId,{Title, Featureimage, Category, status, Content}){
+    async updatePost(PostId,{Title, Featureimage, Category, status, Content,View}){
         try {
-            console.log("PostId",PostId)
             return await this.databases.updateDocument(
                 conf.appwriteDatabaaseId,
                 conf.appwriteCollectionId,
@@ -50,6 +49,7 @@ export class PostService {
                     Category,
                     status,
                     Content,
+                    View
                 }   
             )
             
@@ -90,7 +90,6 @@ export class PostService {
             console.error("Appwrite serive :: getAllPost :: error", error);   
         }
     }
-
     async getUserPost(userId){
         console.log("userId",userId)
         try{
@@ -103,6 +102,54 @@ export class PostService {
             )
         } catch(error){
             console.error("Appwrite serive :: getUserPost :: error", error);   
+        }
+    }
+
+
+    // ====================== post like =======================
+
+    async createLike(userId,postId){
+        try {
+            return await this.databases.createDocument(
+                conf.appwriteDatabaaseId,
+                conf.appwriteLikeCollectionId,
+                ID.unique(),
+                {
+                    userId,
+                    postId,
+                }
+            )
+        } catch (error) {
+            console.error("Appwrite serive :: createLike :: error", error);
+            return false;
+        }
+    }
+
+    async removeLike(LikeID){
+        try {
+            return await this.databases.deleteDocument(
+                conf.appwriteDatabaaseId,
+                conf.appwriteLikeCollectionId,
+                LikeID
+            )
+        } catch (error) {
+            console.error("Appwrite serive :: removeLike :: error", error);
+            return false;
+        }
+    }
+
+    async getLike(userId,postId){
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaaseId,
+                conf.appwriteLikeCollectionId,
+                [
+                    Query.equal("userId",userId),
+                    Query.equal("postId",postId)
+                ]
+            )
+        } catch (error) {
+            console.error("Appwrite serive :: getLike :: error", error);   
         }
     }
 
