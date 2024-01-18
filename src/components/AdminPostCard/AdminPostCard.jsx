@@ -26,7 +26,7 @@ function AdminPostCard({ data, getpost }) {
                 .finally(() => getpost());
         }
     }
-
+    // Get Image Url for Featured image
     useEffect(() => {
         postService.getFilePreview(data.Featureimage)
             .then((res) => setImg(res.href))
@@ -36,18 +36,18 @@ function AdminPostCard({ data, getpost }) {
     return (
         <>
             {
-                loading ? <div className='grid grid-cols-12 gap-4 my-4 p-4 w-[85%] mx-auto bg-[#F4F6FF] rounded-lg'>
-                    <div className='col-span-3' >
+                loading ? <div className='grid grid-cols-12 gap-4 my-4 p-4 lg:w-[85%]  mx-auto bg-[#F4F6FF] rounded-lg'>
+                    <div className='md:col-span-3 col-span-full' >
                         <div className='rounded-lg overflow-hidden' >
                             <img src={img} className='aspect-video' alt="" />
                         </div>
                     </div>
-                    <div className='col-span-7' >
+                    <div className='md:col-span-7 col-span-full' >
                         <h3>{(data.Title).substring(0, 50) + "..."}</h3>
                         {/* <p>{Parser((data.Content).slice(0, 500))}</p> */}
                         <p>{data.$createdAt.split('T')[0].split('-')[2]} - {data.$createdAt.split('T')[0].split('-')[1]} - {data.$createdAt.split('T')[0].split('-')[0]}</p>
                     </div>
-                    <div className='col-span-2 flex flex-col items-center justify-between gap-2' >
+                    <div className='md:col-span-2 col-span-full  flex flex-row  md:flex-col items-center md:justify-between justify-center gap-2' >
                         <Button classname='md:w-[70px] md:p-2 bg-blue-600 hover:bg-blue-900 rounded-lg text-sm' onClick={() => navigate(`/editpost/${data.$id}`)} >Edit</Button>
                         <Button classname='md:w-[70px] md:p-2 bg-red-500 hover:bg-red-900 rounded-lg text-sm' onClick={deleteHandler} >Delete</Button>
                     </div>
