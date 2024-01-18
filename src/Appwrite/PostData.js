@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Storage ,Query} from "appwrite";
+import { Client, Databases, ID, Storage, Query } from "appwrite";
 import conf from "../conf/conf";
 
 export class PostService {
@@ -37,7 +37,7 @@ export class PostService {
             return false;
         }
     }
-    async updatePost(PostId,{Title, Featureimage, Category, status, Content,View}){
+    async updatePost(PostId, { Title, Featureimage, Category, status, Content, View }) {
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaaseId,
@@ -50,14 +50,14 @@ export class PostService {
                     status,
                     Content,
                     View
-                }   
+                }
             )
-            
+
         } catch (error) {
             console.error("Appwrite serive :: updatePost :: error", error);
         }
     }
-    async getPost(PostId){
+    async getPost(PostId) {
         try {
             return await this.databases.getDocument(
                 conf.appwriteDatabaaseId,
@@ -68,7 +68,7 @@ export class PostService {
             console.error("Appwrite serive :: getPost :: error", error);
         }
     }
-    async delatePost(PostId){
+    async delatePost(PostId) {
         try {
             return await this.databases.deleteDocument(
                 conf.appwriteDatabaaseId,
@@ -79,7 +79,7 @@ export class PostService {
             console.error("Appwrite serive :: delatePost :: error", error);
         }
     }
-    async getAllPost(queries = [Query.equal("status", "Active")]){
+    async getAllPost(queries = [Query.equal("status", "Active")]) {
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
@@ -87,28 +87,40 @@ export class PostService {
                 queries
             )
         } catch (error) {
-            console.error("Appwrite serive :: getAllPost :: error", error);   
+            console.error("Appwrite serive :: getAllPost :: error", error);
         }
     }
-    async getUserPost(userId){
-        console.log("userId",userId)
-        try{
+    async getFiterPost({ userId, Category }) {
+        console.log("userId", userId)
+
+        let queryArray = [
+            Query.equal("userId", userId),
+        ];
+    
+        if (Category !== "Posts" && Category) {
+            queryArray.push(Query.equal("Category", Category));
+            console.log("Category", Category)
+        }
+
+        
+
+    
+        try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
                 conf.appwriteCollectionId,
-                [
-                    Query.equal("userId",userId)
-                ]
+                queryArray
             )
-        } catch(error){
-            console.error("Appwrite serive :: getUserPost :: error", error);   
+        } catch (error) {
+            console.error("Appwrite serive :: getUserPost :: error", error);
         }
     }
+
 
 
     // ====================== post like =======================
 
-    async createLike(userId,postId){
+    async createLike(userId, postId) {
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaaseId,
@@ -125,7 +137,7 @@ export class PostService {
         }
     }
 
-    async removeLike(LikeID){
+    async removeLike(LikeID) {
         try {
             return await this.databases.deleteDocument(
                 conf.appwriteDatabaaseId,
@@ -138,49 +150,49 @@ export class PostService {
         }
     }
 
-    async getLike(userId,postId){
+    async getLike(userId, postId) {
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
                 conf.appwriteLikeCollectionId,
                 [
-                    Query.equal("userId",userId),
-                    Query.equal("postId",postId)
+                    Query.equal("userId", userId),
+                    Query.equal("postId", postId)
                 ]
             )
         } catch (error) {
-            console.error("Appwrite serive :: getLike :: error", error);   
+            console.error("Appwrite serive :: getLike :: error", error);
         }
     }
 
 
     // ================== File Service =============
 
-    async uploadFile(file){
+    async uploadFile(file) {
         try {
             return await this.storage.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
                 file,
-            )   
+            )
         } catch (error) {
             console.error("Appwrite serive :: uploadFile :: error", error);
             return false;
         }
     }
 
-    async delateFile(fileId){
+    async delateFile(fileId) {
         try {
             return await this.storage.deleteFile(
                 conf.appwriteBucketId,
                 fileId,
             )
         } catch (error) {
-            console.error("Appwrite serive :: delatePost :: error", error);   
+            console.error("Appwrite serive :: delatePost :: error", error);
         }
     }
 
-    async getFilePreview(fileId){
+    async getFilePreview(fileId) {
         try {
             const res = await this.storage.getFilePreview(
                 conf.appwriteBucketId,
@@ -188,7 +200,7 @@ export class PostService {
             )
             return res;
         } catch (error) {
-            console.error("Appwrite serive :: getFilePreview :: error", error); 
+            console.error("Appwrite serive :: getFilePreview :: error", error);
         }
     }
 

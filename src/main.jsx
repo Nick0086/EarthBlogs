@@ -60,13 +60,21 @@ const router = createBrowserRouter([
     ]
   },
   {
-      path:'/dashboard',
-      element:(
-        <PrivateRoutes isLoggedIn={true}>
-          <DashboardPage/>
-        </PrivateRoutes>
-      )
-  }
+    path:'/dashboard',
+    element:(
+      <PrivateRoutes isLoggedIn={true}>
+        <DashboardPage/>
+      </PrivateRoutes>
+    ),
+},
+{
+  path:'category/:category',
+    element:(
+      <PrivateRoutes isLoggedIn={true}>
+        <DashboardPage/>
+      </PrivateRoutes>
+    ),
+}
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
