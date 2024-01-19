@@ -6,3 +6,7 @@
     background-color: #fff; 
     border-radius: 10px;
 }
+
+.filter-width{
+    width: auto !important;
+}

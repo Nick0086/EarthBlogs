@@ -31,10 +31,10 @@ function HomePostSection() {
                     <div className='bg-gray-50' >
                         <div className='py-14 container '>
                             <h2 className='text-5xl font-bold text-center capitalize mb-10' >feature post</h2>
-                            <div className='grid grid-cols-12 gap-8 gap-y-10' >
+                            <div className='grid grid-cols-12 md:gap-8 gap-y-10' >
                                 {
                                     postData && postData.map((post) => (
-                                        <div key={post.$id} className='col-span-4 ' >
+                                        <div key={post.$id} className='lg:col-span-4 md:col-span-6 col-span-12 ' >
                                             <PostCard post={post} />
                                         </div>
                                     ))

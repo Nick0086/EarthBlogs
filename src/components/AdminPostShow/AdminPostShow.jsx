@@ -75,7 +75,7 @@ function AdminPostShow() {
           <div className='lg:w-[85%] mx-auto flex justify-between items-center mb-2' >
             <h2 className='md:text-3xl text-2xl font-bold ' >{category ? category : "Top Posts"}</h2>
             <Selector
-              mainDivClass="w-[auto] flex items-center "
+              mainDivClass="filter-width flex items-center "
               options={["Most view", "Less View", "New Post", "Old Posts"]}
               onChange={handleFilterChange}
             />
