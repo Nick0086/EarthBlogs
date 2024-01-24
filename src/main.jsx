@@ -50,14 +50,6 @@ const router = createBrowserRouter([
         )
       },
       {
-        path:'/AllPosts:category',
-        element:(
-          <PrivateRoutes isLoggedIn={true}>
-            <AllPostPage/>
-          </PrivateRoutes>
-        )
-      },
-      {
         path:'/editpost/:postid',
         element:(
           <PrivateRoutes isLoggedIn={true}>

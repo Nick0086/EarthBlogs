@@ -98,7 +98,7 @@ function PostForm({ editPost }) {
             {
                 loading ? <div className='bg-gray-100 post-bg' >
                     <ToastContainer />
-                    <div className=' ' >
+                    <div className='lg:py-24 md:py-12 py-10 container' >
                         <form className=' lg:w-3/4 bg-white bg-opacity-60 shadow-xl backdrop-blur-sm   md:w-[90%] w-[95%] rounded-2xl mx-auto md:p-8 p-4' onSubmit={handleSubmit(postHandler)} >
                             <h3 className='md:text-2xl text-xl font-medium text-dark-green text-center mb-10'>Create New Post</h3>
                             <div>
