@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import PostCard from '../PostCard/PostCard'
 import postService from '../../Appwrite/PostData';
 import Spinner from "../Spinner/Spinner"
+import Button from "../Button"
+import { useNavigate } from 'react-router-dom';
 
 function HomePostSection() {
 
     const [postData, setPostData] = useState();
     const [Loading, setLoading] = useState(false)
+    const navigate = useNavigate();
     useEffect(() => {
         setLoading(false)
         postService.getAllPost()
@@ -39,6 +42,9 @@ function HomePostSection() {
                                         </div>
                                     ))
                                 }
+                            </div>
+                            <div className='text-center mt-6' >
+                                <Button onClick={() => navigate('/AllPosts')} >View More</Button>
                             </div>
                         </div>
                     </div>:

@@ -6,5 +6,5 @@
     z-index: 999 !important;
     box-shadow: 0 2px 24px 0 rgb(0 0 0 / 15%) !important;
     background-color: #ffffff !important;
-    transition: 900ms ease-in-out !important;
+    transition: 300ms ease-in !important;
 }

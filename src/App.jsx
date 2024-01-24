@@ -10,12 +10,10 @@ import { login, logout } from './store/authSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-
 function App() {
 
   const [loding , setLoading] = useState(true);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     setLoading(true);
