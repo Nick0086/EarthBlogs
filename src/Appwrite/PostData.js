@@ -91,20 +91,17 @@ export class PostService {
         }
     }
     async getFiterPost({ userId, Category }) {
-        console.log("userId", userId)
 
-        let queryArray = [
-            Query.equal("userId", userId),
-        ];
-    
+
+        let queryArray = [];
+
+        if(userId){
+            queryArray.push(Query.equal("userId", userId))
+        }
         if (Category !== "Posts" && Category) {
             queryArray.push(Query.equal("Category", Category));
             console.log("Category", Category)
         }
-
-        
-
-    
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
@@ -150,15 +147,20 @@ export class PostService {
         }
     }
 
-    async getLike(userId, postId) {
+    async getLike({userId, postId}) {
+        let queryArray = [
+            Query.equal("postId", postId),
+        ];
+
+        if (userId) {
+            queryArray.push(Query.equal("userId", userId));
+        }
+
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
                 conf.appwriteLikeCollectionId,
-                [
-                    Query.equal("userId", userId),
-                    Query.equal("postId", postId)
-                ]
+                queryArray
             )
         } catch (error) {
             console.error("Appwrite serive :: getLike :: error", error);
