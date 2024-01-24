@@ -14,7 +14,7 @@ function NewsLatter() {
         <p className='text-light-green text-sm tracking-wide mb-5' >We are always open to talk about your business, new projects, creative opportunities and how we can help you.</p>
         <div className='flex justify-between items-center' >
           <input type="text" className='w-[70%] outline-none p-2 py-3  rounded-lg text-sm bg-[#FAFAFA] ' placeholder='Email address' />
-          <Button classname={"rounded-lg w-[20%] py-3 text-sm"}>Submit</Button>
+          <Button classname={"rounded-lg w-[30%] ms-4 py-3 text-sm"}>Submit</Button>
         </div>
       </div>
     </section>

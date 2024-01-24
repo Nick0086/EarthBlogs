@@ -14,6 +14,7 @@ function AdminPostShow() {
   const [filterValue, setFilterValue] = useState("Most view")
   const userData = useSelector((state) => state.auth.userData);
   const { category } = useParams();
+  
 
   const filterpost = {
     userId: userData.$id,
@@ -48,7 +49,7 @@ function AdminPostShow() {
               sortedPosts = res.documents;
           }
 
-          if (category === undefined) {
+          if (filterValue === undefined) {
             const topPost = sortedPosts.slice(0, 6);
             setPosts(topPost)
             console.log("topPost", topPost)

@@ -41,7 +41,7 @@ function LoginForm() {
             {
                 loding ?
                     <div className='bg-gray-100 login-bg'>
-                        <div className='md:py-40 py-20 container min-h-screen  flex justify-center items-center' >
+                        <div className='lg:py-24 md:py-12 py-10 container min-h-screen  flex justify-center items-center' >
                             <div className='lg:w-2/4 md:w-2/3 w-full backdrop-brightness-105 backdrop-opacity-80 shadow-xl backdrop-blur-sm mx-auto rounded-xl loginform' >
                                 <form className='w-full md:p-8 p-6 mx-auto' onSubmit={handleSubmit(create)}>
 

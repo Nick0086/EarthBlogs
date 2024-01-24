@@ -90,17 +90,25 @@ export class PostService {
             console.error("Appwrite serive :: getAllPost :: error", error);
         }
     }
-    async getFiterPost({ userId, Category }) {
+    async getFiterPost({ userId, Category, offset }) {
+
+        console.log("offset",offset)
 
 
         let queryArray = [];
 
-        if(userId){
+        if (userId) {
             queryArray.push(Query.equal("userId", userId))
         }
         if (Category !== "Posts" && Category) {
             queryArray.push(Query.equal("Category", Category));
             console.log("Category", Category)
+        }
+        if (offset >= 0) {
+            queryArray.push(
+                Query.limit(15),
+                Query.offset(0)
+            )
         }
         try {
             return await this.databases.listDocuments(
@@ -147,7 +155,7 @@ export class PostService {
         }
     }
 
-    async getLike({userId, postId}) {
+    async getLike({ userId, postId }) {
         let queryArray = [
             Query.equal("postId", postId),
         ];

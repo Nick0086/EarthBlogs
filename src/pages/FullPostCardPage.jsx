@@ -23,7 +23,9 @@ function FullPostCardPage() {
                         .then((res) => {
                             let relateds = res.documents.filter((item) => item.$id !== postid)
                             const shuffledPosts = relateds.sort(() => 0.5 - Math.random());
-                            setRelatedPost(shuffledPosts)
+                            const sortPosts = shuffledPosts.slice(0, 3);
+                            setRelatedPost(sortPosts);
+
                         })
 
                 })
@@ -40,11 +42,12 @@ function FullPostCardPage() {
                 loading ? <Spinner /> :
 
                     <div className='container' >
-                        <div className='grid grid-cols-12 pt-20'  >
-                            <div className='col-span-8' >
+                        <div className='grid grid-cols-12 pt-20 md:gap-0 md:gap-x-4 gap-y-8'  >
+                            <div className='md:col-span-8 col-span-full' >
                                 <DetailPostCard post={post} />
                             </div>
-                            <div className='col-span-4'>
+                            <div className='md:col-span-4 col-span-full'>
+                                <h3 className='text-2xl font-bold text-center mb-8' >Related Posts</h3>
                                 <div className='grid grid-cols-12  md:gap-y-10 gap-y-6' >
                                     {
                                         relatedPost && relatedPost.map((post) => (

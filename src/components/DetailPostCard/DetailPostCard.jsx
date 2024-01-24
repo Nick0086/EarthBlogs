@@ -72,16 +72,16 @@ function DetailPostCard({ post }) {
     }
 
     return (
-        <div className='container' >
-            <div className='w-[90%]  mx-auto' >
-                <h2 className='text-4xl font-bold mb-8 text-center' >{post.Title}</h2>
+        <div>
+            <div className='md:w-[90%] mx-auto' >
+                <h2 className='md:text-4xl text-3xl font-bold mb-8 text-center' >{post.Title}</h2>
                 <div className='mx-auto mb-8'>
-                    <img src={img} className=' w-full aspect-video rounded-xl  mb-4' alt="" />
-                    <Button disable={btndis} classname='bg-transparent hover:bg-transparent md:w-[auto] md:p-[2px] p-[0px]' onClick={userlike ? deleteHandler : likeHandler} >
+                    <img src={img} className=' w-full aspect-video rounded-xl   mb-4' alt="" />
+                    <Button disable={btndis} classname='bg-transparent flex align-items-center hover:bg-transparent md:w-[auto] md:p-[2px] p-[0px]' onClick={userlike ? deleteHandler : likeHandler} >
                         {
-                            !userlike ? <FaRegHeart className='text-black text-xl' /> : <FaHeart className='text-red-600  text-xl' />
+                            !userlike ? <FaRegHeart className='text-black text-xl' /> : <FaHeart className='text-red-600 text-xl' />
                         }
-                        <p className='text-black capitalize' >{likeCount > 0 ? likeCount : "No Like"}</p>
+                        <p className='text-black capitalize ms-2' >{likeCount > 0 ? likeCount : "No Like"}</p>
                     </Button>
                 </div>
                 <h3 className='text-2xl font-extrabold tracking-wide mb-6' >{post.Title}</h3>

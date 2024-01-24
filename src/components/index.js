@@ -13,5 +13,6 @@ import DeshBordHeader from "./DeshBoardHeader/DeshBordHeader";
 import PostCard from "./PostCard/PostCard";
 import HomePostSection from "./HomePostSection/HomePostSection";
 import DetailPostCard from "./DetailPostCard/DetailPostCard";
+import AllPosts from "./AllPostsSide/AllPosts";
 
-export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner,AdminPostShow,DeshBordHeader,PostCard,HomePostSection,DetailPostCard};
+export  {Header,Slider,NewsLatter,SignUpForm,LoginForm,RTE,PostForm,Footer,PrivateRoutes,Spinner,AdminPostShow,DeshBordHeader,PostCard,HomePostSection,DetailPostCard,AllPosts};

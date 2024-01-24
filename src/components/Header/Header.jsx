@@ -22,6 +22,11 @@ function Header({ changeHandler }) {
             authStatus: true
         },
         {
+            name: "All Posts",
+            to: "/AllPosts",
+            authStatus: true
+        },
+        {
             name: "Sign Up",
             to: "/signup",
             authStatus: !authStatus,
@@ -72,7 +77,7 @@ function Header({ changeHandler }) {
     }
 
     return (
-        <header className=' absolute w-full z-50 py-4  header-section' >
+        <header className='  w-full z-50 py-4  header-section' >
             <div className='container' >
                 <div className='flex justify-between items-center' >
                     <div>
@@ -99,7 +104,7 @@ function Header({ changeHandler }) {
                     </nav>
 
                     {/* header for mobile  */}
-                    <div className={`md:hidden fixed -translate-x-full top-0 left-0 bg-white w-[240px] h-screen rounded-r-xl shadow-lg p-3 py-4 duration-500 ease-in-out ${show ? "translate-x-0" : ""}`} >
+                    <div className={`md:hidden z-[999] fixed -translate-x-full top-0 left-0 bg-white w-[240px] h-screen rounded-r-xl shadow-lg p-3 py-4 duration-500 ease-in-out ${show ? "translate-x-0" : ""}`} >
                         <div className='h-[5%] flex justify-between items-center' >
                             <Link className='text-4xl font-bold tracking-wider text-white' >
                                 <img src={Logo} className='md:w-3/4 w-[65%]' alt="logo" />
