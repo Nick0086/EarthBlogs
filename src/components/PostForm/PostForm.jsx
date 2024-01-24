@@ -12,7 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import Spinner from "../Spinner/Spinner"
 
 function PostForm({ editPost }) {
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
+
+    console.log("editPost", editPost)
+
+    const { register, handleSubmit, control, formState: { errors },setValue } = useForm({
         defaultValues: {
             Title: editPost?.Title || '',
             Content: editPost?.Content || '',
@@ -20,19 +23,20 @@ function PostForm({ editPost }) {
             Category: editPost?.Category || "Personal",
         }
     });
+    const [imagePreview, setImagePreview] = useState();
     const userData = useSelector((state) => state.auth.userData)
     const navigate = useNavigate();
     const [loading, SetLoading] = useState(true);
-    
 
+    // function for submit post or edit post
     const postHandler = async (data) => {
+        console.log(data)
 
         SetLoading(false);
-
         if (editPost) {
 
-            console.log("editPost",editPost)
-            console.log("data",data)
+            console.log("editPost", editPost)
+            console.log("data", data)
             console.log(typeof editPost.$id)
 
             const imageFile = data.image[0] ? await postService.uploadFile(data.image[0]) : null;
@@ -43,7 +47,7 @@ function PostForm({ editPost }) {
 
             data.Featureimage = imageFile?.$id || editPost.Featureimage;
 
-            const editposts = await postService.updatePost(editPost.$id,data);
+            const editposts = await postService.updatePost(editPost.$id, data);
 
             if (editposts) {
                 navigate('/');
@@ -51,6 +55,7 @@ function PostForm({ editPost }) {
 
         } else {
             const imageFile = await postService.uploadFile(data.image[0]);
+            setImagePreview(data.image[0]);
             const fileId = imageFile.$id;
 
             data.Featureimage = fileId;
@@ -63,8 +68,29 @@ function PostForm({ editPost }) {
                 navigate('/');
             }
         }
-
         SetLoading(true);
+    };
+
+    // function for get image preview
+
+    const imagePrevHandler = async () => {
+        const res = await postService.getFilePreview(editPost.Featureimage)
+        setImagePreview(res.href)
+    }
+
+    useEffect(() => {
+        if(editPost){
+            imagePrevHandler()
+        }
+    },[editPost])
+
+    const onImageChange = (e) => {
+        console.log("onImageChange called");    
+        console.log(e.target.files)
+        if (e.target.files && e.target.files[0]) {
+            let img = e.target.files[0];
+            setImagePreview(URL.createObjectURL(img));
+        }
     };
 
     // fuction for send notification error in post data fill
@@ -82,16 +108,19 @@ function PostForm({ editPost }) {
             );
         }
     }
+
     useEffect(() => {
         // prevent unauthorize user for edit post
-        if(editPost){
-            if(userData.$id !== editPost.userId){
+        if (editPost) {
+            if (userData.$id !== editPost.userId) {
                 navigate('/')
-            }  
+            }
         }
         // Notify only after the render, using useEffect
         notify();
     }, [errors,notify]);
+
+
 
     return (
         <>
@@ -100,7 +129,11 @@ function PostForm({ editPost }) {
                     <ToastContainer />
                     <div className='lg:py-24 md:py-12 py-10 container' >
                         <form className=' lg:w-3/4 bg-white bg-opacity-60 shadow-xl backdrop-blur-sm   md:w-[90%] w-[95%] rounded-2xl mx-auto md:p-8 p-4' onSubmit={handleSubmit(postHandler)} >
-                            <h3 className='md:text-2xl text-xl font-medium text-dark-green text-center mb-10'>Create New Post</h3>
+                            <h3 className='md:text-2xl text-xl font-medium text-dark-green text-center mb-10'>
+                                {
+                                    editPost ? "Edit Post " : "Create New Post "
+                                }   
+                            </h3>
                             <div>
                                 <Input
                                     label="Title"
@@ -109,9 +142,9 @@ function PostForm({ editPost }) {
                                     placeholder="Title"
                                     {...register("Title",
                                         {
-                                            minLength:{
-                                                value:10,
-                                                message:"The title must be at least 10 characters long."
+                                            minLength: {
+                                                value: 10,
+                                                message: "The title must be at least 10 characters long."
                                             },
                                             maxLength: {
                                                 value: 120,
@@ -128,16 +161,16 @@ function PostForm({ editPost }) {
                                     {...register("Content",
                                         {
                                             required: "Content is required",
-                                            minLength:{
-                                                value:100,
-                                                message:"Your content should contain at least 100 characters.",
+                                            minLength: {
+                                                value: 100,
+                                                message: "Your content should contain at least 100 characters.",
                                             },
                                             maxLength: {
                                                 value: 300,
                                                 message: 'Title cannot exceed 300 characters',
                                             }
                                         }
-                                        )}
+                                    )}
                                 />
                                 <Input
                                     label="Featured Image"
@@ -145,12 +178,19 @@ function PostForm({ editPost }) {
                                     placeholder="Featured Image"
                                     type="file"
                                     classname="border-b-0"
-
                                     accept="image/png, image/jpg, image/jpeg, image/gif"
                                     {...register("image", {
-                                        ...(editPost ? {} : {required : "Post Thumbnail is required"}),
+                                        ...(editPost ? {} : {
+                                            required: "Post Thumbnail is required",
+                                            onChange: (e) => onImageChange(e),
+                                        }),
                                     })}
                                 />
+                                {imagePreview &&    
+                                    <div className="my-4">
+                                        <img src={imagePreview} alt="Featured Image" srcSet="" className="md:w-[60%] w-[95%] h-auto mx-auto" />
+                                    </div>
+                                }
                                 <Selector
                                     labelclass="text-[16px]"
                                     label="Status"

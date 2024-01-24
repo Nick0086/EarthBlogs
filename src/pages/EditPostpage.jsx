@@ -7,21 +7,21 @@ function EditPostpage() {
 
     const { postid } = useParams();
     const [editPost, setEditPost] = useState('');
-    const [lo, setLo] = useState(true)
+    const [loding, setLoding] = useState(true)
 
     useEffect(() => {
-        setLo(true)
+        setLoding(true)
         if (postid) {
             postService.getPost(postid)
                 .then((res) => setEditPost(res))
                 .catch((error) => console.error("error in fetch post for edit", error))
-                .finally(() => setLo(false))
+                .finally(() => setLoding(false))
         }
     }, [postid])
 
     return (<>
         {
-            lo ? <Spinner/> : <PostForm editPost={editPost} />
+            loding ? <Spinner/> : <PostForm editPost={editPost} />
         }
     </>
 
