@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Spinner from "../Spinner/Spinner"
 
 function PostForm({ editPost }) {
-    const { register, handleSubmit, control, formState: { errors }, setValue, getValues } = useForm({
+    const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
             Title: editPost?.Title || '',
             Content: editPost?.Content || '',
@@ -71,12 +71,12 @@ function PostForm({ editPost }) {
     const notify = () => {
         if (Object.keys(errors).length !== 0) {
             toast.error(`
-                    ${errors.title ? errors.title.message :
-                    errors.content ? errors.content.message :
+                    ${errors.Title ? errors.Title.message :
+                    errors.Content ? errors.Content.message :
                         errors.image ? errors.image.message : ""}
                     `, {
                 position: "top-right",
-                autoClose: 3000,
+                autoClose: 1000,
                 pauseOnHover: true,
             }
             );
@@ -91,7 +91,7 @@ function PostForm({ editPost }) {
         }
         // Notify only after the render, using useEffect
         notify();
-    }, [errors, setValue, getValues,notify]);
+    }, [errors,notify]);
 
     return (
         <>
@@ -109,7 +109,10 @@ function PostForm({ editPost }) {
                                     placeholder="Title"
                                     {...register("Title",
                                         {
-                                            required: "Title is required",
+                                            minLength:{
+                                                value:10,
+                                                message:"The title must be at least 10 characters long."
+                                            },
                                             maxLength: {
                                                 value: 120,
                                                 message: 'Title cannot exceed 120 characters',
@@ -125,9 +128,13 @@ function PostForm({ editPost }) {
                                     {...register("Content",
                                         {
                                             required: "Content is required",
+                                            minLength:{
+                                                value:100,
+                                                message:"Your content should contain at least 100 characters.",
+                                            },
                                             maxLength: {
-                                                value: 3000,
-                                                message: 'Title cannot exceed 3000 characters',
+                                                value: 300,
+                                                message: 'Title cannot exceed 300 characters',
                                             }
                                         }
                                         )}
@@ -141,7 +148,7 @@ function PostForm({ editPost }) {
 
                                     accept="image/png, image/jpg, image/jpeg, image/gif"
                                     {...register("image", {
-                                        // required: "Post Thumbnail is required",
+                                        ...(editPost ? {} : {required : "Post Thumbnail is required"}),
                                     })}
                                 />
                                 <Selector
