@@ -7,6 +7,8 @@ import Button from '../Button'
 import authService from '../../Appwrite/Auth'
 import { logout } from '../../store/authSlice'
 import { FaBars } from "react-icons/fa6";
+import { FaWindowClose } from "react-icons/fa";
+
 
 function Header({ changeHandler }) {
 
@@ -109,7 +111,7 @@ function Header({ changeHandler }) {
                             <Link className='text-4xl font-bold tracking-wider text-white' >
                                 <img src={Logo} className='md:w-3/4 w-[65%]' alt="logo" />
                             </Link>
-                            <Button classname='ms-2 bg-[#444961] hover:bg-[#444944] md:hidden py-2 px-2 rounded-md' onClick={() => setShow(false)} ><FaBars /></Button>
+                            <Button classname='ms-2 bg-[#444961] hover:bg-[#444944] md:hidden py-2 px-2 rounded-md' onClick={() => setShow(false)} ><FaWindowClose /></Button>
                         </div>
                         <ul className='flex flex-col h-[96%] mt-5' >
                             {
