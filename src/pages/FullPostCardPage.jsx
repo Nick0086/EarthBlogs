@@ -58,7 +58,7 @@ function FullPostCardPage() {
                                             ))
                                         }
                                         {
-                                            relatedPost.length === 0 && <p className='text-gray-900 col-span-12 text-center font-medium' >No Related Posts</p>
+                                           relatedPost && relatedPost.length === 0 && <p className='text-gray-900 col-span-12 text-center font-medium' >No Related Posts</p>
                                         }
                                     </div>
                                 </div>
