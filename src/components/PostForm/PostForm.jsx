@@ -13,8 +13,6 @@ import Spinner from "../Spinner/Spinner"
 
 function PostForm({ editPost }) {
 
-    console.log("editPost", editPost)
-
     const { register, handleSubmit, control, formState: { errors },setValue } = useForm({
         defaultValues: {
             Title: editPost?.Title || '',
@@ -95,6 +93,7 @@ function PostForm({ editPost }) {
 
     // fuction for send notification error in post data fill
     const notify = () => {
+        console.log("error",errors)
         if (Object.keys(errors).length !== 0) {
             toast.error(`
                     ${errors.Title ? errors.Title.message :
@@ -117,8 +116,9 @@ function PostForm({ editPost }) {
             }
         }
         // Notify only after the render, using useEffect
-        notify();
-    }, [errors,notify]);
+            notify()
+        
+    }, [errors]);
 
 
 
@@ -142,6 +142,7 @@ function PostForm({ editPost }) {
                                     placeholder="Title"
                                     {...register("Title",
                                         {
+                                            required:"Title is required",
                                             minLength: {
                                                 value: 10,
                                                 message: "The title must be at least 10 characters long."
@@ -206,7 +207,7 @@ function PostForm({ editPost }) {
                                     {...register("Category", { required: true })}
                                 />
                                 <div className='text-center mt-6'>
-                                    <Button type='submit'>Add Post</Button>
+                                    <Button type='submit' onClick={notify} >Add Post</Button>
                                 </div>
                             </div>
                         </form>
