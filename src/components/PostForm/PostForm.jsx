@@ -33,18 +33,12 @@ function PostForm({ editPost }) {
         SetLoading(false);
         if (editPost) {
 
-            console.log("editPost", editPost)
-            console.log("data", data)
-            console.log(typeof editPost.$id)
-
             const imageFile = data.image[0] ? await postService.uploadFile(data.image[0]) : null;
-
             if (imageFile) {
                 await postService.delateFile(editPost.Featureimage);
             }
 
             data.Featureimage = imageFile?.$id || editPost.Featureimage;
-
             const editposts = await postService.updatePost(editPost.$id, data);
 
             if (editposts) {
@@ -83,8 +77,6 @@ function PostForm({ editPost }) {
     },[editPost])
 
     const onImageChange = (e) => {
-        console.log("onImageChange called");    
-        console.log(e.target.files)
         if (e.target.files && e.target.files[0]) {
             let img = e.target.files[0];
             setImagePreview(URL.createObjectURL(img));
@@ -93,7 +85,6 @@ function PostForm({ editPost }) {
 
     // fuction for send notification error in post data fill
     const notify = () => {
-        console.log("error",errors)
         if (Object.keys(errors).length !== 0) {
             toast.error(`
                     ${errors.Title ? errors.Title.message :
@@ -149,7 +140,7 @@ function PostForm({ editPost }) {
                                             },
                                             maxLength: {
                                                 value: 120,
-                                                message: 'Title cannot exceed 120 characters',
+                                                message: 'Title cannot exceed 200 characters',
                                             }
                                         })}
                                 />
@@ -167,8 +158,8 @@ function PostForm({ editPost }) {
                                                 message: "Your content should contain at least 100 characters.",
                                             },
                                             maxLength: {
-                                                value: 300,
-                                                message: 'Title cannot exceed 300 characters',
+                                                value: 3000,
+                                                message: 'content cannot exceed 3000 characters',
                                             }
                                         }
                                     )}
@@ -181,15 +172,15 @@ function PostForm({ editPost }) {
                                     classname="border-b-0"
                                     accept="image/png, image/jpg, image/jpeg, image/gif"
                                     {...register("image", {
+                                        onChange: (e) => onImageChange(e),
                                         ...(editPost ? {} : {
                                             required: "Post Thumbnail is required",
-                                            onChange: (e) => onImageChange(e),
                                         }),
                                     })}
                                 />
                                 {imagePreview &&    
                                     <div className="my-4">
-                                        <img src={imagePreview} alt="Featured Image" srcSet="" className="md:w-[60%] w-[95%] h-auto mx-auto" />
+                                        <img src={imagePreview} alt="Featured Image" srcSet="" className="md:w-[50%] w-[95%] h-auto mx-auto rounded-lg shadow-xl" />
                                     </div>
                                 }
                                 <Selector
