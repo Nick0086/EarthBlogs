@@ -21,9 +21,7 @@ function HomePostSection() {
                 const randomPosts = shuffledPosts.slice(0, 12);
                 // Set the state with the random posts
                 setPostData(randomPosts);
-                console.log(randomPosts)
             })
-            .then((res) => console.log(res))
             .finally(() => setLoading(true))
     }, [])
 
@@ -47,8 +45,8 @@ function HomePostSection() {
                                 <Button onClick={() => navigate('/AllPosts')} >View More</Button>
                             </div>
                         </div>
-                    </div>:
-                    <Spinner/>
+                    </div> :
+                    <Spinner />
             }
         </>
     )

@@ -117,8 +117,6 @@ export class PostService {
         }
     }
 
-
-
     // ====================== post like =======================
 
     async createLike(userId, postId) {
@@ -170,7 +168,6 @@ export class PostService {
             console.error("Appwrite serive :: getLike :: error", error);
         }
     }
-
 
     // ================== File Service =============
 
