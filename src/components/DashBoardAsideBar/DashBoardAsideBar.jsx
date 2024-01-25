@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import  './DahBoardAsideBar.css'
 import { FaBars } from "react-icons/fa6";
 import Button from '../Button';
+import { FaWindowClose } from "react-icons/fa";
 function DashBoardAsideBar({aslidebarhandler,show}) {
 
     const AsideBarMenu = [
@@ -62,7 +63,7 @@ function DashBoardAsideBar({aslidebarhandler,show}) {
             <Link className='text-4xl font-bold tracking-wider text-white' >  
                 EARTH
             </Link>
-            <Button classname='ms-2 bg-[#444961] hover:bg-[#444944] md:hidden py-3 px-3 rounded-md' onClick={() => aslidebarhandler(false)} ><FaBars /></Button>
+            <Button classname='ms-2 bg-[#444961] hover:bg-[#444944] md:hidden py-3 px-3 rounded-md' onClick={() => aslidebarhandler(false)} ><FaWindowClose /></Button>
         </div>
         <div className='h-[93%] overflow-y-auto custom-scrollbar'> 
             <ul>

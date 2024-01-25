@@ -90,7 +90,7 @@ export class PostService {
             console.error("Appwrite serive :: getAllPost :: error", error);
         }
     }
-    async getFiterPost({ userId, Category }) {
+    async getFiterPost({ userId, Category,Status="Active" }) {
 
         let queryArray = [];
         if (userId) {
@@ -98,7 +98,13 @@ export class PostService {
         }
         if (Category !== "Posts" && Category) {
             queryArray.push(Query.equal("Category", Category));
-            console.log("Category", Category)
+        }
+        if(Status === "All"){
+            queryArray.push(Query.equal("status","Active" ));
+            console.log("status all", Status)
+        }else{
+            queryArray.push(Query.equal("status",Status ));
+            console.log("status", Status)
         }
         try {
             return await this.databases.listDocuments(
