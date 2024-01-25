@@ -43,7 +43,7 @@ function FullPostCardPage() {
 
                     <div className='bg-gray-50' >
                         <div className='container' >
-                            <div className='grid grid-cols-12 py-20 md:gap-0 md:gap-x-4 gap-y-8'  >
+                            <div className='grid grid-cols-12 lg:py-20 md:py-14 py-10 md:gap-0 md:gap-x-4 gap-y-8'  >
                                 <div className='md:col-span-8 col-span-full' >
                                     <DetailPostCard post={post} />
                                 </div>
@@ -56,6 +56,9 @@ function FullPostCardPage() {
                                                     <PostCard post={post} />
                                                 </div>
                                             ))
+                                        }
+                                        {
+                                            relatedPost.length === 0 && <p className='text-gray-900 col-span-12 text-center font-medium' >No Related Posts</p>
                                         }
                                     </div>
                                 </div>
