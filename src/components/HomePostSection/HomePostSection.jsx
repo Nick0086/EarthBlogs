@@ -14,7 +14,6 @@ function HomePostSection() {
         setLoading(false)
         postService.getAllPost()
             .then((res) => {
-                console.log(res)
                 setPostData(res);
             })
             .finally(() => setLoading(true))

@@ -90,7 +90,7 @@ export class PostService {
 
             // Generate random indices to retrieve 9 random posts
             const randomIndices = generateRandomIndices(totalPosts, 9);
-            
+
             // Fetch 9 random posts from the database using the random indices
             // Promisall takes an array of promises and returns a single promise
             const randomPosts = await Promise.all(randomIndices.map(async (index) => {
@@ -106,6 +106,39 @@ export class PostService {
             console.error("Appwrite serive :: getAllPost :: error", error);
         }
     }
+
+    async getFiterPost({ userId, Category, Status = "Active", offset }) {
+        let queryArray = [];
+        if (userId) {
+            queryArray.push(Query.equal("userId", userId))
+        }
+        if (Category !== "Posts" && Category) {
+            queryArray.push(Query.equal("Category", Category));
+        }
+        if (Status === "All") {
+            queryArray.push(Query.equal("status", "Active"));
+        } else {
+            queryArray.push(Query.equal("status", Status));
+        }
+        if (offset !== undefined) {
+            queryArray.push(
+                Query.orderDesc('$createdAt'),
+                Query.orderAsc('Title'), 
+                Query.limit(15),
+                Query.offset(offset),
+            )
+        }
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaaseId,
+                conf.appwriteCollectionId,
+                queryArray,
+            )
+        } catch (error) {
+            console.error("Appwrite serive :: getUserPost :: error", error);
+        }
+    }
+
     // ====================== post like =======================
 
     async createLike(userId, postId) {

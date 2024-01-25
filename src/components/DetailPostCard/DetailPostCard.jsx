@@ -27,7 +27,7 @@ function DetailPostCard({ post }) {
         postService.updatePost(post.$id, {
             ...post,
             View: parseInt(post.View + 1),
-        }).then((res) => console.log(res.View))
+        })
         // function for get image
         postService.getFilePreview(post.Featureimage)
             .then((res) => setImg(res.href))

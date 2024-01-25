@@ -9,16 +9,13 @@ import Button from '../Button';
 function AllPosts() {
 
     const [userPosts, setPosts] = useState([]);
-    const [paginationPosts, setPaginationPosts] = useState([])
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState();
-    const [offset, setoffset] = useState(0)
+    const [offset,setOffset] = useState(0);
+    const [totalPage,setTotalPage] = useState();
 
     const AsideBarMenu = ["Category", "Personal", "News", "Sport", "Travel", "Food", "Fashion", "Finance", "Music", "Business", "Lifesyle"]
 
-    const filterpost = {
-        Category: category ? category : null,
-    }
     const handleFilterChange = (value) => {
         if (value.target.value === "Category") {
             setCategory(null);
@@ -27,6 +24,11 @@ function AllPosts() {
         }
     };
 
+    const filterpost = {
+        Category: category ? category : null,
+        offset,
+    }
+
     const getpost = async () => {
         setLoading(false)
         try {
@@ -34,7 +36,8 @@ function AllPosts() {
                 .then((res) => {
                     let sortedPosts = res.documents.sort(() => 0.5 - Math.random());
                     setPosts(sortedPosts);
-                    setPaginationPosts(sortedPosts.slice(offset, offset + 15))
+                    setTotalPage(res.total);   
+                    console.log(sortedPosts)
                 })
         } catch (error) {
             console.error(error)
@@ -43,11 +46,7 @@ function AllPosts() {
     }
     useEffect(() => {
         getpost();
-    }, [category])
-
-    useEffect(() => {
-        setPaginationPosts(userPosts.slice(offset, offset + 15))
-    }, [offset]);
+    }, [category,offset])
 
     return (
         <>
@@ -64,7 +63,7 @@ function AllPosts() {
                     loading ?
                         <>
                             <div className='grid grid-cols-12 md:gap-8 md:gap-y-10 gap-y-6' >
-                                {paginationPosts.length !== 0 ? paginationPosts.map((data) => (
+                                {userPosts.length !== 0 ? userPosts.map((data) => (
                                     <div className='lg:col-span-4 md:col-span-6 col-span-12' key={data.$id}>
                                         <PostCard post={data} />
                                     </div>
@@ -74,8 +73,8 @@ function AllPosts() {
                             </div>
 
                             <div className='text-center mt-8' >
-                                <Button classname='md:w-[80px] rounded-lg mx-2' onClick={() => setoffset(offset - 15)} disable={offset <= 0}  >Prev</Button>
-                                <Button classname='md:w-[80px] rounded-lg mx-2' onClick={() => setoffset(offset + 15)} disable={offset + 15 >= userPosts.length} >Next</Button>
+                                <Button classname='md:w-[70px] md:py-[8px] rounded-lg mx-2' onClick={() => setOffset(offset - 15)} disable={offset <= 0}  >Prev</Button>
+                                <Button classname='md:w-[70px] md:py-[8px] rounded-lg mx-2' onClick={() => setOffset(offset + 15)} disable={offset + 15 >= totalPage} >Next</Button>
                             </div>
                         </>
                         :
