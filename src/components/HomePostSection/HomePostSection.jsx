@@ -15,12 +15,7 @@ function HomePostSection() {
         postService.getAllPost()
             .then((res) => {
                 console.log(res)
-                // Shuffle the array of posts
-                const shuffledPosts = res.documents.sort(() => 0.5 - Math.random());
-                // Get the first 12 posts
-                const randomPosts = shuffledPosts.slice(0, 12);
-                // Set the state with the random posts
-                setPostData(randomPosts);
+                setPostData(res);
             })
             .finally(() => setLoading(true))
     }, [])

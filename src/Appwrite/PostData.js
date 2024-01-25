@@ -81,42 +81,31 @@ export class PostService {
     }
     async getAllPost(queries = [Query.equal("status", "Active")]) {
         try {
-            return await this.databases.listDocuments(
+            const totalCount = await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
                 conf.appwriteCollectionId,
                 queries
             )
+            const totalPosts = totalCount.documents.length;
+
+            // Generate random indices to retrieve 9 random posts
+            const randomIndices = generateRandomIndices(totalPosts, 9);
+            
+            // Fetch 9 random posts from the database using the random indices
+            // Promisall takes an array of promises and returns a single promise
+            const randomPosts = await Promise.all(randomIndices.map(async (index) => {
+                const post = await this.databases.getDocument(
+                    conf.appwriteDatabaaseId,
+                    conf.appwriteCollectionId,
+                    totalCount.documents[index].$id // Assuming $id is the document ID field
+                );
+                return post;
+            }));
+            return randomPosts;
         } catch (error) {
             console.error("Appwrite serive :: getAllPost :: error", error);
         }
     }
-    async getFiterPost({ userId, Category,Status="Active" }) {
-
-        let queryArray = [];
-        if (userId) {
-            queryArray.push(Query.equal("userId", userId))
-        }
-        if (Category !== "Posts" && Category) {
-            queryArray.push(Query.equal("Category", Category));
-        }
-        if(Status === "All"){
-            queryArray.push(Query.equal("status","Active" ));
-            console.log("status all", Status)
-        }else{
-            queryArray.push(Query.equal("status",Status ));
-            console.log("status", Status)
-        }
-        try {
-            return await this.databases.listDocuments(
-                conf.appwriteDatabaaseId,
-                conf.appwriteCollectionId,
-                queryArray
-            )
-        } catch (error) {
-            console.error("Appwrite serive :: getUserPost :: error", error);
-        }
-    }
-
     // ====================== post like =======================
 
     async createLike(userId, postId) {
@@ -207,6 +196,15 @@ export class PostService {
         }
     }
 
+}
+
+// Function to generate an array of n random unique indices within range [0, max)
+function generateRandomIndices(max, n) {
+    const indices = new Set();
+    while (indices.size < n) {
+        indices.add(Math.floor(Math.random() * max));
+    }
+    return Array.from(indices);
 }
 
 const postService = new PostService();
