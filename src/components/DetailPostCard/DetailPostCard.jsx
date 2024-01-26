@@ -7,7 +7,6 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import TimeAgo from '../TimeAgo/TimeAgo';
 import CommentCard from '../CommentCard/CommentCard';
 
 function DetailPostCard({ post }) {
@@ -20,7 +19,6 @@ function DetailPostCard({ post }) {
     const [userlike, seruerlike] = useState(false);
     const [Comment, setComment] = useState("");
     const [allcomments, setAllComments] = useState();
-    const [commentCount, setCommentCount] = useState();
 
     const userData = {
         userId: userId.$id,
