@@ -15,8 +15,6 @@ function AdminPostShow() {
   const [status, setStatus] = useState("All");
   const userData = useSelector((state) => state.auth.userData);
   const { category } = useParams();
-  console.log(category)
-
   const filterpost = {
     userId: userData.$id,
     Category: category ? category : null,

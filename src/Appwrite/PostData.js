@@ -86,22 +86,26 @@ export class PostService {
                 conf.appwriteCollectionId,
                 queries
             )
-            const totalPosts = totalCount.documents.length;
+            if (totalCount) {
+                const totalPosts = totalCount.documents.length;
 
-            // Generate random indices to retrieve 9 random posts
-            const randomIndices = generateRandomIndices(totalPosts, 9);
+                // Generate random indices to retrieve 9 random posts
+                const randomIndices = generateRandomIndices(totalPosts, 9);
 
-            // Fetch 9 random posts from the database using the random indices
-            // Promisall takes an array of promises and returns a single promise
-            const randomPosts = await Promise.all(randomIndices.map(async (index) => {
-                const post = await this.databases.getDocument(
-                    conf.appwriteDatabaaseId,
-                    conf.appwriteCollectionId,
-                    totalCount.documents[index].$id // Assuming $id is the document ID field
-                );
-                return post;
-            }));
-            return randomPosts;
+                // Fetch 9 random posts from the database using the random indices
+                // Promisall takes an array of promises and returns a single promise
+                const randomPosts = await Promise.all(randomIndices.map(async (index) => {
+                    const post = await this.databases.getDocument(
+                        conf.appwriteDatabaaseId,
+                        conf.appwriteCollectionId,
+                        totalCount.documents[index].$id // Assuming $id is the document ID field
+                    );
+                    return post;
+                }));
+                return randomPosts;
+            } else {
+                return false;
+            }
         } catch (error) {
             console.error("Appwrite serive :: getAllPost :: error", error);
         }
@@ -123,7 +127,7 @@ export class PostService {
         if (offset !== undefined) {
             queryArray.push(
                 Query.orderDesc('$createdAt'),
-                Query.orderAsc('Title'), 
+                Query.orderAsc('Title'),
                 Query.limit(15),
                 Query.offset(offset),
             )
@@ -192,7 +196,7 @@ export class PostService {
     }
 
     //========================comments ===========================
-    async createComments({UserId, PostId,Comments,UserName}) {
+    async createComments({ UserId, PostId, Comments, UserName }) {
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaaseId,
@@ -224,16 +228,16 @@ export class PostService {
         }
     }
 
-    async getAllComments(PostId){
+    async getAllComments(PostId) {
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
                 conf.appwriteCommentCollectionId,
                 [
-                    Query.equal("PostId",PostId),
+                    Query.equal("PostId", PostId),
                     Query.orderDesc("$createdAt")
                 ]
-            )  
+            )
         } catch (error) {
             console.error("Appwrite serive :: getAllComments :: error", error);
             return false;
