@@ -49,7 +49,7 @@ function FullPostCardPage() {
                                 </div>
                                 <div className='md:col-span-4 col-span-full'>
                                     <h3 className='text-2xl font-bold text-center mb-8' >Related Posts</h3>
-                                    <div className='grid grid-cols-12  md:gap-y-10 gap-y-6' >
+                                    <div className='grid grid-cols-12 lg:gap-y-10 md:gap-y-8 gap-y-6' >
                                         {
                                             relatedPost && relatedPost.map((post) => (
                                                 <div key={post.$id} className=' col-span-12 ' >
