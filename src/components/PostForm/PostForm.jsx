@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import Input from '../input';
+import Input from '../Input';
 import Button from '../Button';
 import RTE from '../RTE/RTE';
 import Selector from '../Selector';
@@ -179,7 +179,7 @@ function PostForm({ editPost }) {
                                     })}
                                 />
                                 {imagePreview &&    
-                                    <div className="my-4">
+                                    <div className="my-4 ">
                                         <img src={imagePreview} alt="Featured Image" srcSet="" className="md:w-[50%] w-[95%] h-auto mx-auto rounded-lg shadow-xl" />
                                     </div>
                                 }

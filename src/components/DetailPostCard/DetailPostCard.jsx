@@ -2,21 +2,24 @@ import React, { useEffect, useState } from 'react'
 import postService from '../../Appwrite/PostData';
 import Parser from 'html-react-parser';
 import Button from '../Button';
+import Input from "../Input"
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import TimeAgo from '../TimeAgo/TimeAgo';
 
 function DetailPostCard({ post }) {
 
     const userId = useSelector((state) => state.auth.userData);
-
     const [img, setImg] = useState();
-    const [LikeID, setlike] = useState()
-    const [likeCount, setLikeCount] = useState()
+    const [btndis, setBtnDis] = useState(false);
+    const [LikeID, setlike] = useState();
+    const [likeCount, setLikeCount] = useState();
     const [userlike, seruerlike] = useState(false);
-    const [btndis, setBtnDis] = useState(false)
+    const [Comment, setComment] = useState("");
+    const [allcomments, setAllComments] = useState();
+    const [commentCount, setCommentCount] = useState();
 
     const userData = {
         userId: userId.$id,
@@ -42,12 +45,15 @@ function DetailPostCard({ post }) {
                     seruerlike(true);
                 }
             })
+
+        // function for count like on post
+        likeCountHandler();
+        // function for fetch all comments on this post
+        allCommentsHandler();
     }, [])
 
-    useEffect(() => {
-        postService.getLike({ ...userData, userId: null })
-            .then((res) => setLikeCount(res.total))
-    })
+
+    // function for handel like on post 
 
     const likeHandler = async () => {
         setBtnDis(true)
@@ -56,19 +62,74 @@ function DetailPostCard({ post }) {
                 if (res) {
                     setlike(res.$id);
                     seruerlike(true);
+                    likeCountHandler();
                 }
             })
             .finally(() => setBtnDis(false))
     }
+
     const deleteHandler = async () => {
         setBtnDis(true)
         postService.removeLike(LikeID)
             .then((res) => {
                 if (res) {
                     seruerlike(false)
+                    likeCountHandler();
                 }
             })
             .finally(() => setBtnDis(false))
+    }
+
+    const likeCountHandler = async () => {
+        postService.getLike({ ...userData, userId: null })
+            .then((res) => setLikeCount(res.total))
+    }
+
+    // function for handel comments on post 
+
+    const commentHandler = async (e) => {
+
+        e.preventDefault();
+
+        if (Comment !== "") {
+
+            const com = {
+                UserId: userId.$id,
+                PostId: post.$id,
+                Comments: Comment,
+                UserName: userId.name,
+            }
+
+            setBtnDis(true)
+            postService.createComments(com)
+                .then((res) => {
+                    if (res) {
+                        console.log("commentres", res)
+                        allCommentsHandler()
+                        setComment("")
+                    }
+                })
+                .finally(() => setComment(""))
+        } else {
+            toast.error("Enter Comment...", {
+                position: "top-right",
+                autoClose: 1500,
+                pauseOnHover: true
+            })
+        }
+    }
+
+    const commentDeleteHandler = async (id) => {
+        postService.removeComments(id)
+            .then((res) => {
+                if (res) {
+                    allCommentsHandler()
+                }
+            })
+    }
+    const allCommentsHandler = async () => {
+        postService.getAllComments(post.$id)
+            .then((res) => setAllComments(res.documents))
     }
 
     return (
@@ -86,6 +147,40 @@ function DetailPostCard({ post }) {
                 </div>
                 <h3 className='text-2xl font-extrabold tracking-wide mb-6' >{post.Title}</h3>
                 <div className='text-lg font-medium  opacity-70 tracking-tight' >{Parser(post.Content)}</div>
+                <div className='my-5 py-4 border-t-2 border-opacity-50 border-green-700' >
+                    <h3 className='text-3xl font-bold mb-3' >Comments</h3>
+                    <form className='grid grid-cols-12 gap-x-2' onSubmit={commentHandler} >
+                        <Input
+                            placeholder="Enter Your Comment..."
+                            classname="bg-white shadow-md rounded-xl px-2 col-span-10 mb-[0px] "
+                            value={Comment}
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        <Button
+                            classname="md:w-[auto] rounded-xl col-span-2"
+                            type='submit'
+                        >Comment</Button>
+                    </form>
+                    <div className='bg-white rounded-lg overflow-hidden mt-2 shadow-md' >
+                        {
+                            allcomments && allcomments.map((data, index) => (
+                                <div key={index} className='p-3 my-1 last:border-b-0 border-b-[1px] border-gray-600' >
+                                    <h4 className='text-base font-medium text-light-green mb-2' >{data.UserName}</h4>
+                                    <p className='text-sm tracking-tight mb-2' >
+                                        {
+                                            data.Comments.substring(0,50)
+                                        }
+                                    </p>
+                                    <p><TimeAgo date={data.$createdAt} /> ago</p>
+                                    {
+                                        data.UserId === userId.$id ? <Button onClick={() => commentDeleteHandler(data.$id)} classname='md:w-[auto] md:p-[4px] rounded-md text-xs' >Delete</Button> : ""
+                                    }
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <ToastContainer />
+                </div>
             </div>
         </div>
     )

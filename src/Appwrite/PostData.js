@@ -191,6 +191,55 @@ export class PostService {
         }
     }
 
+    //========================comments ===========================
+    async createComments({UserId, PostId,Comments,UserName}) {
+        try {
+            return await this.databases.createDocument(
+                conf.appwriteDatabaaseId,
+                conf.appwriteCommentCollectionId,
+                ID.unique(),
+                {
+                    UserId,
+                    PostId,
+                    Comments,
+                    UserName
+                }
+            )
+        } catch (error) {
+            console.error("Appwrite serive :: createComments :: error", error);
+            return false;
+        }
+    }
+
+    async removeComments(CommentId) {
+        try {
+            return await this.databases.deleteDocument(
+                conf.appwriteDatabaaseId,
+                conf.appwriteCommentCollectionId,
+                CommentId
+            )
+        } catch (error) {
+            console.error("Appwrite serive :: removeComments :: error", error);
+            return false;
+        }
+    }
+
+    async getAllComments(PostId){
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaaseId,
+                conf.appwriteCommentCollectionId,
+                [
+                    Query.equal("PostId",PostId),
+                    Query.orderDesc("$createdAt")
+                ]
+            )  
+        } catch (error) {
+            console.error("Appwrite serive :: getAllComments :: error", error);
+            return false;
+        }
+    }
+
     // ================== File Service =============
 
     async uploadFile(file) {

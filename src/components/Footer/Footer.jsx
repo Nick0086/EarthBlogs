@@ -8,7 +8,7 @@ function Footer() {
       <div className='flex justify-between items-center' >
         <div className='basis-1/3 '  >
           <Link to='/'>
-            <img src={Logo} className='md:w-[40%] w-[90%] ' alt="" srcset="" />
+            <img src={Logo} className='md:w-[40%] w-[90%] ' alt=""/>
           </Link>
         </div>
         <div className='basis-2/3' >

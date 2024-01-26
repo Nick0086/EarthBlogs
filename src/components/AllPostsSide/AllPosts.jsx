@@ -36,8 +36,7 @@ function AllPosts() {
                 .then((res) => {
                     let sortedPosts = res.documents.sort(() => 0.5 - Math.random());
                     setPosts(sortedPosts);
-                    setTotalPage(res.total);   
-                    console.log(sortedPosts)
+                    setTotalPage(res.total);
                 })
         } catch (error) {
             console.error(error)
