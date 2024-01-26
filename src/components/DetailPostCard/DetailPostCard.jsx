@@ -8,6 +8,7 @@ import { FaHeart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import TimeAgo from '../TimeAgo/TimeAgo';
+import CommentCard from '../CommentCard/CommentCard';
 
 function DetailPostCard({ post }) {
 
@@ -147,8 +148,10 @@ function DetailPostCard({ post }) {
                 </div>
                 <h3 className='text-2xl font-extrabold tracking-wide mb-6' >{post.Title}</h3>
                 <div className='text-lg font-medium  opacity-70 tracking-tight' >{Parser(post.Content)}</div>
+                    
+                 {/* code for comment on post    */}
                 <div className='my-5 py-4 border-t-2 border-opacity-50 border-green-700' >
-                    <h3 className='text-3xl font-bold mb-3' >Comments</h3>
+                    <h3 className='text-3xl font-bold mb-3' >Comments <span className='text-2xl font-medium' >({allcomments && allcomments.length})</span></h3>
                     <form className='grid grid-cols-12 gap-x-2' onSubmit={commentHandler} >
                         <Input
                             placeholder="Enter Your Comment..."
@@ -161,20 +164,11 @@ function DetailPostCard({ post }) {
                             type='submit'
                         >Comment</Button>
                     </form>
-                    <div className='bg-white rounded-lg overflow-hidden mt-2 shadow-md' >
+                    <div className='bg-white rounded-lg overflow-auto custom-scrollbar comment-scroll mt-2 shadow-md h-screen ' >
                         {
                             allcomments && allcomments.map((data, index) => (
                                 <div key={index} className='p-3 my-1 last:border-b-0 border-b-[1px] border-gray-600' >
-                                    <h4 className='text-base font-medium text-light-green mb-2' >{data.UserName}</h4>
-                                    <p className='text-sm tracking-tight mb-2' >
-                                        {
-                                            data.Comments.substring(0,50)
-                                        }
-                                    </p>
-                                    <p><TimeAgo date={data.$createdAt} /> ago</p>
-                                    {
-                                        data.UserId === userId.$id ? <Button onClick={() => commentDeleteHandler(data.$id)} classname='md:w-[auto] md:p-[4px] rounded-md text-xs' >Delete</Button> : ""
-                                    }
+                                    <CommentCard data={data} commentDeleteHandler={commentDeleteHandler} />
                                 </div>
                             ))
                         }
