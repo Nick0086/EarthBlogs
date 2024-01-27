@@ -86,7 +86,8 @@ export class PostService {
                 conf.appwriteCollectionId,
                 queries
             )
-            if (totalCount) {
+            if (totalCount.documents.length > 9) {
+                console.log("call")
                 const totalPosts = totalCount.documents.length;
 
                 // Generate random indices to retrieve 9 random posts
@@ -103,6 +104,8 @@ export class PostService {
                     return post;
                 }));
                 return randomPosts;
+            }else if(totalCount.documents.length > 0 && totalCount.documents.length <= 9 ){
+                return totalCount.documents;
             } else {
                 return false;
             }
@@ -132,6 +135,7 @@ export class PostService {
                 Query.offset(offset),
             )
         }
+        console.log("queryArray",queryArray)
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaaseId,
@@ -176,6 +180,7 @@ export class PostService {
     }
 
     async getLike({ userId, postId }) {
+        console.log("userId",userId)
         let queryArray = [
             Query.equal("postId", postId),
         ];

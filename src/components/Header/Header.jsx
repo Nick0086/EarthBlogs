@@ -26,7 +26,7 @@ function Header({ changeHandler }) {
         {
             name: "All Posts",
             to: "/AllPosts",
-            authStatus: true
+            authStatus: authStatus,
         },
         {
             name: "Sign Up",

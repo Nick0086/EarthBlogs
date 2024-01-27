@@ -33,7 +33,6 @@ function AdminPostShow() {
     try {
       await postService.getFiterPost({ ...filterpost })
         .then((res) => {
-
           let sortedPosts;
           switch (filterValue) {
             case "Most view":

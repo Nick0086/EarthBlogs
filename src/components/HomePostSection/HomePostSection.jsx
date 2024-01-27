@@ -4,15 +4,33 @@ import postService from '../../Appwrite/PostData';
 import Spinner from "../Spinner/Spinner"
 import Button from "../Button"
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+
 
 function HomePostSection() {
 
     const [postData, setPostData] = useState();
     const [Loading, setLoading] = useState(false)
+    const userId = useSelector((state) => state.auth.userData);
     const navigate = useNavigate();
+
+
+    const pagehandler = () => {
+        if (userId) {
+            navigate('/AllPosts')
+        } else {
+            toast.error("User must be Login", {
+                position: "top-right",
+                autoClose: 1500,
+                pauseOnHover: true
+            })
+        }
+    }
+
     useEffect(() => {
         setLoading(false)
-        async () => {
+        const getData = async () => {
             try {
                 await postService.getAllPost()
                     .then((res) => {
@@ -22,6 +40,7 @@ function HomePostSection() {
                 console.error(error)
             }
         }
+        getData();
         setLoading(true)
     }, [])
 
@@ -38,16 +57,18 @@ function HomePostSection() {
                                         <div key={post.$id} className='lg:col-span-4 md:col-span-6 col-span-12 ' >
                                             <PostCard post={post} />
                                         </div>
-                                    )) : <h2 className='col-span-12 text-4xl font-bold flex justify-center items-center h-[50vh] ' >No post available</h2>
+                                    )) 
+                                    : <h2 className='col-span-12 text-4xl font-bold flex justify-center items-center h-[50vh] ' >No post available</h2>
                                 }
                             </div>
                             <div className='text-center mt-6' >
-                                <Button onClick={() => navigate('/AllPosts')} >View More</Button>
+                                <Button onClick={pagehandler} >View More</Button>
                             </div>
                         </div>
                     </div> :
                     <Spinner />
             }
+            <ToastContainer />
         </>
     )
 }

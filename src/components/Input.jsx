@@ -2,7 +2,6 @@ import React, { useId } from 'react'
 
 function Input({
     label="",
-    value="",
     labelclass,
     type="text",
     placeholder,
@@ -24,7 +23,6 @@ function Input({
             {...propes}
             ref={ref}
             placeholder={placeholder}
-            value={value}
         />
     </>
   )
