@@ -48,7 +48,7 @@ function HomePostSection() {
         <>
             {
                 Loading ?
-                    <div className='bg-gray-50' >
+                    <div className='bg-gray-100' >
                         <div className='md:py-14 py-8 container '>
                             <h2 className='md:text-5xl text-4xl font-bold text-center capitalize md:mb-10 mb-6' >feature post</h2>
                             <div className='grid grid-cols-12 md:gap-8 md:gap-y-10 gap-y-6' >
