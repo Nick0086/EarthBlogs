@@ -3,7 +3,6 @@ import postService from '../../Appwrite/PostData';
 import Button from '../Button';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
-import TimeAgo from '../TimeAgo/TimeAgo';
 
 function AdminPostCard({ data, getpost }) {
 

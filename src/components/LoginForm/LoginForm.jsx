@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Input from '../input';
+import Input from '../Input';
 import Button from '../Button';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
