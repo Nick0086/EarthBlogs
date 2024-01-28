@@ -7,7 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import CommentCard from '../CommentCard/CommentCard';
-import Input from '../input';
+import Input from '../Input';
 
 function DetailPostCard({ post }) {
 
